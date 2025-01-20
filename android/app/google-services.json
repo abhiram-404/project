@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "700039457549",
+    "project_id": "untitled-1-a4ab0",
+    "storage_bucket": "untitled-1-a4ab0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700039457549:android:0b6c4d19cbf036bdee1e44",
+        "android_client_info": {
+          "package_name": "com.drconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700039457549-h34f2uqsf6s5cdu7hhfhbc6siqq19jjo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.drconnect",
+            "certificate_hash": "bc0bdb3ccb191b0667570b558d845e6f1c44c5d8"
+          }
+        },
+        {
+          "client_id": "700039457549-pjvb0snpijqd7nikvbb5a31mhkeqj8h3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGyKro57DoS8xsGM_-ALpN00As0GwzqlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700039457549-pjvb0snpijqd7nikvbb5a31mhkeqj8h3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "700039457549-kl7bdbg8c6rih3kk1irav5a2mvc8k6hb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.drconnect.drConnect"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700039457549:android:d90d9013ad947c64ee1e44",
+        "android_client_info": {
+          "package_name": "com.drconnect.dr_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700039457549-i114enksp8rre01j89pdip0q1gf9okrj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.drconnect.dr_connect",
+            "certificate_hash": "bc0bdb3ccb191b0667570b558d845e6f1c44c5d8"
+          }
+        },
+        {
+          "client_id": "700039457549-pjvb0snpijqd7nikvbb5a31mhkeqj8h3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGyKro57DoS8xsGM_-ALpN00As0GwzqlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700039457549-pjvb0snpijqd7nikvbb5a31mhkeqj8h3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "700039457549-kl7bdbg8c6rih3kk1irav5a2mvc8k6hb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.drconnect.drConnect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
