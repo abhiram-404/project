@@ -1,6 +1,6 @@
-import 'package:dr_connect/view/Doc/dochomepg.dart';
 import 'package:flutter/material.dart';
 import '../../controller/doctor_service.dart';
+import '../test.dart';
 
 class Special extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -33,8 +33,8 @@ class _SpecialState extends State<Special> {
         title: const Text(
           'Select Specialization',
           style: TextStyle(
+            fontSize:25,color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
             shadows: [
               Shadow(
                 offset: Offset(1, 1),
@@ -44,71 +44,31 @@ class _SpecialState extends State<Special> {
             ],
           ),
         ),
+        centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.blue.shade700, Colors.blue.shade500],
+              colors: [Colors.blue.shade500, Colors.blue.shade500],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
         ),
-        centerTitle: true,
         elevation: 10,
-        shadowColor: Colors.black38,
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blue.shade500, Colors.blue.shade300, Colors.blue.shade100],
+            colors: [Colors.blue.shade500, Colors.blue.shade200],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(16.0),
-            //   child: Card(
-            //     elevation: 5,
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(12),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(16.0),
-            //       child: Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           Text(
-            //             'Name: ${widget.userData['name']}',
-            //             style: const TextStyle(
-            //               fontSize: 16,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //           const SizedBox(height: 8),
-            //           Text(
-            //             'Email: ${widget.userData['email']}',
-            //             style: const TextStyle(fontSize: 14),
-            //           ),
-            //           const SizedBox(height: 8),
-            //           Text(
-            //             'Phone: ${widget.userData['phone']}',
-            //             style: const TextStyle(fontSize: 14),
-            //           ),
-            //           const SizedBox(height: 8),
-            //           Text(
-            //             'Password: ${widget.userData['password']}',
-            //             style: const TextStyle(fontSize: 14),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 itemCount: specializations.length,
                 itemBuilder: (context, index) {
                   final specialization = specializations[index];
@@ -117,12 +77,13 @@ class _SpecialState extends State<Special> {
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        selectedSpecialization = specialization;
+                        selectedSpecialization =
+                        isSelected ? null : specialization;
                       });
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 8),
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: isSelected ? Colors.blue.shade50 : Colors.white,
                         borderRadius: BorderRadius.circular(12),
@@ -131,31 +92,54 @@ class _SpecialState extends State<Special> {
                               ? Colors.blue.shade700
                               : Colors.grey.shade300,
                         ),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 4,
-                            offset: Offset(2, 2),
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 6,
+                            offset: const Offset(2, 4),
                           ),
                         ],
                       ),
-                      child: Text(
-                        specialization,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: isSelected
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            specialization,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                              color: isSelected
+                                  ? Colors.blue.shade700
+                                  : Colors.black87,
+                            ),
+                          ),
+                          if (isSelected)
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.blue.shade700,
+                            ),
+                        ],
                       ),
                     ),
                   );
                 },
               ),
             ),
-            if (selectedSpecialization != null)
-              ElevatedButton(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+              child: ElevatedButton(
                 onPressed: () async {
+                  if (selectedSpecialization == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please select a specialization.'),
+                      ),
+                    );
+                    return;
+                  }
+
                   final data = {
                     ...widget.userData,
                     'specialization': selectedSpecialization,
@@ -165,13 +149,32 @@ class _SpecialState extends State<Special> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Doctor Registered')),
                   );
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => DocHomepg(/*userDetails: {},*/)),
+                    MaterialPageRoute(
+                      builder: (context) => DocHomepg(),
+                    ),
                   );
                 },
-                child: const Text('Confirm'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue.shade700,
+                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 5,
+                  minimumSize: const Size.fromHeight(56), // Full-width button
+                ),
+                child: const Text(
+                  'Confirm',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
+            ),
           ],
         ),
       ),

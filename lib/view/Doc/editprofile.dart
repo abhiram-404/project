@@ -65,7 +65,7 @@ class Edit extends StatelessWidget {
                         buildTextField('Name', 'Enter New Name'),
 
                         // Email Field
-                        buildTextField('Email', 'Enter New Email'),
+                        // buildTextField('Email', 'Enter New Email'),
 
                         // Phone Field
                         buildTextField('Phone', 'Enter New Mobile Number'),

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../controller/session.dart';
 import 'AboutUs.dart';
 import 'logindoc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DocHomepg extends StatefulWidget {
   // Removed userDetails and directly fetching uid and email from SessionManager
@@ -35,7 +36,6 @@ class _DocHomepgState extends State<DocHomepg> {
       fetchUserDetails(uid!);
     }
   }
-
   Future<void> fetchUserDetails(String uid) async {
     if (uid.isEmpty) return;
 
@@ -158,7 +158,7 @@ class _DocHomepgState extends State<DocHomepg> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SettingsPage()),
+                                builder: (context) => Settingspage()),
                           );
                         }),
                     _buildTile(
@@ -172,17 +172,17 @@ class _DocHomepgState extends State<DocHomepg> {
                         );
                       },
                     ),
-                    _buildTile(
-                      icon: Icons.lock_outlined,
-                      title: 'Change password',
-                      color: Colors.blue.shade100,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Password()),
-                        );
-                      },
-                    ),
+                    // _buildTile(
+                    //   icon: Icons.lock_outlined,
+                    //   title: 'Change password',
+                    //   color: Colors.blue.shade100,
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => Password()),
+                    //     );
+                    //   },
+                    // ),
                     Divider(),
                     _buildTile(
                       icon: Icons.exit_to_app,

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'dochomepg.dart';
 
-class Settingspage extends StatefulWidget {
+import '../Doc/dochomepg.dart';
+import 'PatHomepg.dart';
+
+
+class SettingsPagePat extends StatefulWidget {
   @override
-  _SettingspageState createState() => _SettingspageState();
+  _SettingsPagePatState createState() => _SettingsPagePatState();
 }
 
-class _SettingspageState extends State<Settingspage> {
+class _SettingsPagePatState extends State<SettingsPagePat> {
   bool _notificationsEnabled = true;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.blue[50],
+        primarySwatch: Colors.teal,
+        scaffoldBackgroundColor: Colors.teal[50],
         appBarTheme: AppBarTheme(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -37,7 +40,7 @@ class _SettingspageState extends State<Settingspage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        DocHomepg(/*userDetails: {}*/), // Replace with your target page
+                        PatHomePg(/*userDetails: {}*/), // Replace with your target page
                   ),
                 );
               },
@@ -45,7 +48,7 @@ class _SettingspageState extends State<Settingspage> {
             flexibleSpace: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.blue[800]!, Colors.blue[400]!],
+                  colors: [Colors.teal[800]!, Colors.teal[400]!],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -62,13 +65,13 @@ class _SettingspageState extends State<Settingspage> {
               SwitchListTile(
                 title: Text(
                   'Notifications',
-                  style: TextStyle(fontSize: 16, color: Colors.blue[800]),
+                  style: TextStyle(fontSize: 16, color: Colors.teal[800]),
                 ),
                 subtitle: Text(
                   _notificationsEnabled
                       ? 'Notifications are enabled'
                       : 'Notifications are disabled',
-                  style: TextStyle(color: Colors.blue[600]),
+                  style: TextStyle(color: Colors.teal[600]),
                 ),
                 value: _notificationsEnabled,
                 onChanged: (bool value) {
@@ -80,10 +83,10 @@ class _SettingspageState extends State<Settingspage> {
                   _notificationsEnabled
                       ? Icons.notifications_active
                       : Icons.notifications_off,
-                  color: _notificationsEnabled ? Colors.blue : Colors.grey,
+                  color: _notificationsEnabled ? Colors.teal : Colors.grey,
                 ),
               ),
-              Divider(color: Colors.blue),
+              Divider(color: Colors.teal),
 
             ],
           ),

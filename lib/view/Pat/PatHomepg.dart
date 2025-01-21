@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dr_connect/view/Pat/SettingsPat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../controller/session.dart';
@@ -99,16 +100,20 @@ class _PatHomePgState extends State<PatHomePg> {
                   _buildTile(
                     icon: Icons.settings, title: 'Settings',
                     color: Colors.teal.shade100,
-                    iconColor: Colors.white,  // Set the icon color to white
+                    iconColor: Colors.teal,  // Set the icon color to white
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SettingsPagePat()),
+                      );
                     },
                   ),
                   _buildTile(
                     icon: Icons.report,
                     title: 'About us',
                     color: Colors.teal.shade100,
-                    iconColor: Colors.white,  // Set the icon color to white
+                    iconColor: Colors.teal,  // Set the icon color to white
                     onTap: () {
                       Navigator.push(
                         context,
@@ -121,16 +126,42 @@ class _PatHomePgState extends State<PatHomePg> {
                     icon: Icons.exit_to_app,
                     title: 'Logout',
                     color: Colors.red.shade500,
-                    iconColor: Colors.white,  // Set the icon color to white
-                    onTap: () async {
-                      SessionManager sessionManager = SessionManager();
-                      await sessionManager.clearSession();
-                      // Navigate to FirstPg after clearing session
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => FirstPg()),);
+                    iconColor: Colors.white, // Set the icon color to white
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Confirm Logout'),
+                            content: const Text('Do you really want to logout?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(); // Close the alert dialog
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  // Clear session and navigate to FirstPg
+                                  SessionManager sessionManager = SessionManager();
+                                  await sessionManager.clearSession();
+
+                                  // Navigate to FirstPg after confirming logout
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => FirstPg()),
+                                  );
+                                },
+                                child: const Text('Logout'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                   ),
+
                 ],
               ),
             ),

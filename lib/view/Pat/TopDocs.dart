@@ -242,21 +242,27 @@ class TopDocs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.teal.shade700,
         elevation: 0,
         title: Text(
           'Top Doctors',
           style: TextStyle(color: Colors.white),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.notifications, color: Colors.white),
+        //     onPressed: () {},
+        //   ),
+        // ],
       ),
       body: Container(
-        color: Colors.teal.shade50,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.teal.shade700, Colors.teal.shade400, Colors.teal.shade200],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 16,

@@ -23,7 +23,7 @@ class _SplashState extends State<Splash> {
     var sessionData = await SessionManager().getSession();
 
     if (sessionData == null) {
-      Timer(Duration(seconds: 3), () {
+      Timer(Duration(seconds: 1), () {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => FirstPg()));
       });
@@ -41,17 +41,17 @@ class _SplashState extends State<Splash> {
           .get();
 
       if (userSnapshot.exists) {
-        Timer(Duration(seconds: 3), () {
+        Timer(Duration(seconds: 2), () {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => PatHomePg()));
         });
       } else if (doctorSnapshot.exists) {
-        Timer(Duration(seconds: 3), () {
+        Timer(Duration(seconds: 2), () {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginDoc()));
         });
       } else {
-        Timer(Duration(seconds: 3), () {
+        Timer(Duration(seconds: 2), () {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => FirstPg()));
         });

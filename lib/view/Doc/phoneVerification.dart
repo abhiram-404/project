@@ -88,80 +88,106 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> with CodeAuto
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('OTP Verification'),
-        backgroundColor: Color(0xFF2575FC),
+        title: const Text(
+          'OTP Verification',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.blue.shade500,
+        elevation: 0,
+        centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Enter the OTP sent to ${widget.phoneNumber}',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.blue.shade800,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
+      body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue.shade500,
+                Colors.blue.shade300,
+                Colors.blue.shade100
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
-            SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(6, (index) {
-                return Container(
-                  width: 50,
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  child: TextFormField(
-                    controller: _otpControllers[index],
-                    keyboardType: TextInputType.number,
-                    maxLength: 1,
-                    textAlign: TextAlign.center,
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        if (index < 5) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                        smsCode = _otpControllers.map((e) => e.text).join();
-                      } else if (index > 0) {
-                        FocusScope.of(context).previousFocus();
-                      }
-                    },
-                    decoration: InputDecoration(
-                      counterText: '',
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF2575FC)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                    ),
-                  ),
-                );
-              }),
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: _verifyOtp,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF2575FC),
-                padding: EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                minimumSize: Size(double.infinity, 50),
-              ),
-              child: Text(
-                'Verify OTP',
-                style: TextStyle(
+          ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter the OTP sent to\n${widget.phoneNumber}',
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(6, (index) {
+                  return Container(
+                    width: 50,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 4,
+                          offset: const Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                    child: TextFormField(
+                      controller: _otpControllers[index],
+                      keyboardType: TextInputType.number,
+                      maxLength: 1,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          if (index < 5) {
+                            FocusScope.of(context).nextFocus();
+                          }
+                          smsCode = _otpControllers.map((e) => e.text).join();
+                        } else if (index > 0) {
+                          FocusScope.of(context).previousFocus();
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        counterText: '',
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: _verifyOtp,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 5,
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'Verify OTP',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

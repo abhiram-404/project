@@ -13,14 +13,14 @@ class RegDoc extends StatefulWidget {
 
 class _RegDocState extends State<RegDoc> {
   final _formKey = GlobalKey<FormState>();
-  final passwordrgx = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+  //final passwordrgx = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
   final phonergr = RegExp(r"^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$");
   bool _isPasswordHidden = true;
 
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
-  final conpasswordController = TextEditingController();
+  // final passwordController = TextEditingController();
+  // final conpasswordController = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationId = '';
@@ -126,59 +126,59 @@ class _RegDocState extends State<RegDoc> {
                             },
                           ),
                           SizedBox(height: 10),
-                          TextFormField(
-                            controller: passwordController,
-                            obscureText: _isPasswordHidden,
-                            decoration: _inputDecoration(
-                              label: 'Password',
-                              hint: 'Enter your Password',
-                              icon: Icons.lock,
-                            ).copyWith(
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
-                                  color: Color(0xFF2575FC),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _isPasswordHidden = !_isPasswordHidden;
-                                  });
-                                },
-                              ),
-                            ),
-                            validator: (value) => value!.isEmpty ? 'Enter your password' : null,
-                          ),
-                          SizedBox(height: 10),
-                          TextFormField(
-                            controller: conpasswordController,
-                            obscureText: _isPasswordHidden,
-                            decoration: _inputDecoration(
-                              label: 'Confirm Password',
-                              hint: 'ReEnter your Password',
-                              icon: Icons.lock,
-                            ).copyWith(
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
-                                  color: Color(0xFF2575FC),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _isPasswordHidden = !_isPasswordHidden;
-                                  });
-                                },
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please confirm your password';
-                              }
-                              if (value != passwordController.text) {
-                                return 'Passwords do not match';
-                              }
-                              return null;
-                            },
-                          ),
+                          // TextFormField(
+                          //   controller: passwordController,
+                          //   obscureText: _isPasswordHidden,
+                          //   decoration: _inputDecoration(
+                          //     label: 'Password',
+                          //     hint: 'Enter your Password',
+                          //     icon: Icons.lock,
+                          //   ).copyWith(
+                          //     suffixIcon: IconButton(
+                          //       icon: Icon(
+                          //         _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
+                          //         color: Color(0xFF2575FC),
+                          //       ),
+                          //       onPressed: () {
+                          //         setState(() {
+                          //           _isPasswordHidden = !_isPasswordHidden;
+                          //         });
+                          //       },
+                          //     ),
+                          //   ),
+                          //   validator: (value) => value!.isEmpty ? 'Enter your password' : null,
+                          // ),
+                          // SizedBox(height: 10),
+                          // TextFormField(
+                          //   controller: conpasswordController,
+                          //   obscureText: _isPasswordHidden,
+                          //   decoration: _inputDecoration(
+                          //     label: 'Confirm Password',
+                          //     hint: 'ReEnter your Password',
+                          //     icon: Icons.lock,
+                          //   ).copyWith(
+                          //     suffixIcon: IconButton(
+                          //       icon: Icon(
+                          //         _isPasswordHidden ? Icons.visibility : Icons.visibility_off,
+                          //         color: Color(0xFF2575FC),
+                          //       ),
+                          //       onPressed: () {
+                          //         setState(() {
+                          //           _isPasswordHidden = !_isPasswordHidden;
+                          //         });
+                          //       },
+                          //     ),
+                          //   ),
+                          //   validator: (value) {
+                          //     if (value == null || value.isEmpty) {
+                          //       return 'Please confirm your password';
+                          //     }
+                          //     if (value != passwordController.text) {
+                          //       return 'Passwords do not match';
+                          //     }
+                          //     return null;
+                          //   },
+                          // ),
                           SizedBox(height: 20),
 
                           ElevatedButton(
@@ -239,7 +239,7 @@ class _RegDocState extends State<RegDoc> {
                 userData: {
                   'name': nameController.text,
                   'phone': phoneController.text,
-                  'password': passwordController.text,
+                  // 'password': passwordController.text,
                 },
               ),
             ),

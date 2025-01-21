@@ -15,11 +15,11 @@ class _ProfileState extends State<Profile> {
   Map<String, dynamic>? doctorDetails;
 
   String name = '';
-  String email = '';
+  // String email = '';
   String phone = '';
   String specialization = '';
   bool isLoadingName = true;
-  bool isLoadingEmail = true;
+  // bool isLoadingEmail = true;
   bool isLoadingPhone = true;
   bool isLoadingSpecialization = true;
   String? uid;
@@ -47,11 +47,11 @@ class _ProfileState extends State<Profile> {
       if (snapshot.exists) {
         setState(() {
           name = snapshot['name'] ?? 'N/A';
-          email = snapshot['email'] ?? 'N/A';
+          // email = snapshot['email'] ?? 'N/A';
           phone = snapshot['phone'] ?? 'N/A';
           specialization = snapshot['specialization'] ?? 'N/A';
           isLoadingName = false;
-          isLoadingEmail = false;
+          // isLoadingEmail = false;
           isLoadingPhone = false;
           isLoadingSpecialization = false;
         });
@@ -168,8 +168,8 @@ class _ProfileState extends State<Profile> {
                 children: [
                   buildProfileField(context, "Name", Icons.person_outline,
                       isLoadingName ? 'Loading...' : name),
-                  buildProfileField(context, "Email", Icons.email_outlined,
-                      isLoadingEmail ? 'Loading...' : email),
+                  // buildProfileField(context, "Email", Icons.email_outlined,
+                  //     isLoadingEmail ? 'Loading...' : email),
                   buildProfileField(context, "Phone", Icons.phone,
                       isLoadingPhone ? 'Loading...' : phone),
                   buildProfileField(

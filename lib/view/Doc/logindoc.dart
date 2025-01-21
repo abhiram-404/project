@@ -1,11 +1,12 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dr_connect/view/Doc/phoneVerification.dart';
 import 'package:dr_connect/view/Doc/regdoc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bcrypt/bcrypt.dart';
 import '../../controller/session.dart';
 import '../Pat/loginpat.dart';
-import 'ForgotPassLogin.dart';
 import 'dochomepg.dart';
 
 class LoginDoc extends StatefulWidget {
@@ -18,7 +19,7 @@ class LoginDoc extends StatefulWidget {
 class _MyAppState extends State<LoginDoc> {
   final _formKey = GlobalKey<FormState>();
   final emailAddress =
-  RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+  RegExp(r"^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$");
   final passwordrgx =
   RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
   bool _isPasswordHidden = true;
@@ -208,76 +209,10 @@ class _MyAppState extends State<LoginDoc> {
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter your email';
+                                      return 'Please enter your phone number';
                                     }
                                     if (!emailAddress.hasMatch(value)) {
-                                      return 'Enter a valid email address';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(height: 20),
-
-                                // Password Field
-                                TextFormField(
-                                  controller: _passwordController,
-                                  obscureText: _isPasswordHidden,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey.shade800,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Enter your Password',
-                                    labelText: 'Password',
-                                    labelStyle: TextStyle(
-                                      color: Colors.grey.shade800,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.lock,
-                                      color: Colors.blue,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(color: Colors.blue),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(color: Colors.blue),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(color: Colors.red),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(color: Colors.red),
-                                    ),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        _isPasswordHidden
-                                            ? Icons.visibility
-                                            : Icons.visibility_off,
-                                        color: Color(0xFF2575FC),
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          _isPasswordHidden =
-                                          !_isPasswordHidden;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your password';
-                                    }
-                                    if (!passwordrgx.hasMatch(value)) {
-                                      return 'Password must be at least 8 characters long and include an uppercase letter, lowercase letter and number';
+                                      return 'Enter a valid phone number';
                                     }
                                     return null;
                                   },
@@ -303,27 +238,6 @@ class _MyAppState extends State<LoginDoc> {
                                   child: Center(child: Text('Log in')),
                                 ),
 
-                                SizedBox(height: 10),
-
-                                // Forgot Password Button
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ForgotPassLogin()),
-                                    );
-                                  },
-                                  child: Text(
-                                    'Forgot Password ?',
-                                    style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
 
                                 SizedBox(height: 30),
 
@@ -386,3 +300,4 @@ class _MyAppState extends State<LoginDoc> {
     );
   }
 }
+

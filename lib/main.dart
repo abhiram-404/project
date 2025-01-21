@@ -1,12 +1,4 @@
-import 'package:dr_connect/view/Doc/dochomepg.dart';
-import 'package:dr_connect/view/Doc/logindoc.dart';
-import 'package:dr_connect/view/Doc/regdoc.dart';
-import 'package:dr_connect/view/Pat/loginpat.dart';
 import 'package:dr_connect/view/SplashScreen.dart';
-import 'package:dr_connect/view/fileUplalod.dart';
-import 'package:dr_connect/view/login.dart';
-import 'package:dr_connect/view/test.dart';
-import 'package:dr_connect/view/testt.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
