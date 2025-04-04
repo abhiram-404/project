@@ -277,10 +277,6 @@ class _UploadPageState extends State<UploadPage> {
                 controller: _categoryController,
                 decoration: InputDecoration(labelText: 'Category'),
               ),
-              TextField(
-                controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
-              ),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _pickFile,

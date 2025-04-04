@@ -188,8 +188,8 @@ class _DetailsState extends State<Details> {
                                     if (_formKey.currentState?.validate() ?? false) {
                                       // You can handle form submission or navigation here
                                       String name = _nameController.text;
-                                      String email = _emailController.text;
-                                      print("Name: $name, Email: $email");
+                                      //String email = _emailController.text;
+                                      print("Name: $name, Email: $emailAddress");
 
                                       // For now, navigate to next page or handle accordingly
                                       Navigator.push(

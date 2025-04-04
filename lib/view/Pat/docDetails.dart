@@ -1,104 +1,20 @@
-/*
-import 'package:flutter/material.dart';
-import '../../model/doctor.dart';
-
-class DoctorDetailsPage extends StatelessWidget {
-  final Doctor doctor; // Use the Doctor model to pass data
-
-  DoctorDetailsPage({required this.doctor});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${doctor.name} - Details'),
-        backgroundColor: Colors.teal,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: NetworkImage(
-                doctor.profileImage ??
-                    'https://firebasestorage.googleapis.com/v0/b/skillshare-1204d.firebasestorage.app/o/profile%2Fprofile.png?alt=media&token=bd6851ba-051c-454c-b300-290b8897a916', // default image
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Name: ${doctor.name}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Email: ${doctor.email}',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Phone: ${doctor.phone}',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Specialization: ${doctor.specialization}',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Password: ${doctor.password}', // Avoid showing this in real apps
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                // Logic to book the appointment (can be implemented based on your requirement)
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text('Book Appointment'),
-                    content: Text('Appointment with Dr. ${doctor.name} has been booked successfully!'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              child: Text('Book Appointment'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                textStyle: TextStyle(fontSize: 18),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dr_connect/view/Pat/BookNow.dart';
 import 'package:flutter/material.dart';
 
-class DoctorDetailsPage extends StatelessWidget {
+class DocDetails extends StatelessWidget {
   final String uid;
 
-  DoctorDetailsPage({required this.uid});  // Accept uid as parameter
+  DocDetails({required this.uid}); // Accept uid as parameter
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Doctor Details'),
+        title: Text(
+          'Doctor Details',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.teal,
       ),
       body: FutureBuilder<DocumentSnapshot>(
@@ -110,37 +26,84 @@ class DoctorDetailsPage extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             var doctor = snapshot.data!.data() as Map<String, dynamic>;
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: NetworkImage(doctor['profileImage']),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Name: ${doctor['name']}',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Email: ${doctor['email']}',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Phone: ${doctor['phone']}',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Specialization: ${doctor['specialization']}',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  // Add other doctor details here
-                ],
+            return Center(
+              child: Container(
+                width: 300,
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        doctor['profileImage'],
+                        height: 150,
+                        width: 150,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Name: ${doctor['name']}',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Phone: ${doctor['phone']}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Specialization: ${doctor['specialization']}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Room Status: ${doctor['roomStatus'] ?? 'Unknown'}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: doctor['roomStatus'] == 'Available' ? Colors.green : Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Current Location: ${doctor['currentLocation'] ?? 'Not Available'}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Booknow(doctorName: AutofillHints.username), // Passing uid here
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal, // Button background color
+                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      ),
+                      child: Text(
+                        'Book Now',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           } else {

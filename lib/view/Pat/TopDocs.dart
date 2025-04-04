@@ -258,7 +258,7 @@ class TopDocs extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.teal.shade700, Colors.teal.shade400, Colors.teal.shade200],
+            colors: [Colors.teal.shade100, Colors.teal.shade50],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -354,7 +354,7 @@ class TopDocs extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DoctorDetailsPage(uid: uid), // Passing uid here
+                      builder: (context) => DocDetails(uid: uid), // Passing uid here
                     ),
                   );
                 },

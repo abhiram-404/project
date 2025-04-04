@@ -1,17 +1,14 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dr_connect/view/Doc/Settings.dart';
-import 'package:dr_connect/view/Doc/passwordchange.dart';
 import 'package:dr_connect/view/Doc/profilepg.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../controller/session.dart';
 import 'AboutUs.dart';
 import 'logindoc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DocHomepg extends StatefulWidget {
-  // Removed userDetails and directly fetching uid and email from SessionManager
   DocHomepg({Key? key}) : super(key: key);
 
   @override
@@ -19,6 +16,7 @@ class DocHomepg extends StatefulWidget {
 }
 
 class _DocHomepgState extends State<DocHomepg> {
+  bool isTimeIn = false;
   String username = 'Fetching...';
   String depart = 'Loading..';
   String? uid;
@@ -36,6 +34,7 @@ class _DocHomepgState extends State<DocHomepg> {
       fetchUserDetails(uid!);
     }
   }
+
   Future<void> fetchUserDetails(String uid) async {
     if (uid.isEmpty) return;
 
@@ -52,6 +51,7 @@ class _DocHomepgState extends State<DocHomepg> {
         setState(() {
           username = 'User Not Found';
           depart = 'Department Not Found';
+          isTimeIn = userDoc['roomStatus'] == 'in';
         });
       }
     } catch (e) {
@@ -63,12 +63,42 @@ class _DocHomepgState extends State<DocHomepg> {
     }
   }
 
+  Future<void> toggleTimeStatus() async {
+    if (uid == null) return;
+
+    String newStatus = isTimeIn ? 'out' : 'in';
+    DateTime now = DateTime.now();
+
+    try {
+      // 1. Update roomStatus in main doctor doc
+      await FirebaseFirestore.instance.collection('doctors').doc(uid).update({
+        'roomStatus': newStatus,
+      });
+
+      // 2. Add entry to punchHistory subcollection
+      await FirebaseFirestore.instance
+          .collection('doctors')
+          .doc(uid)
+          .collection('punchHistory')
+          .add({
+        'status': newStatus,
+        'timestamp': now,
+      });
+
+      // 3. Update local state
+      setState(() {
+        isTimeIn = !isTimeIn;
+      });
+    } catch (e) {
+      print("Error updating time status: $e");
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final displayedEmail = email ?? 'No Email Provided';
-    //print(email);
-    //final userId = email ?? 'No ID Available';
-    // print(userId);
+
     return Container(
       // Gradient Background Covering the Entire Screen
       decoration: BoxDecoration(
@@ -91,7 +121,7 @@ class _DocHomepgState extends State<DocHomepg> {
           backgroundColor: Colors.blue.shade500,
           // AppBar background color
           elevation: 0,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.white, // Change the drawer icon (3 lines) color
             size: 28, // Adjust the size if needed
           ),
@@ -99,12 +129,12 @@ class _DocHomepgState extends State<DocHomepg> {
             animatedTexts: [
               TypewriterAnimatedText(
                 'WELCOME',
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 30,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
-                speed: Duration(milliseconds: 200), // Typing speed
+                speed: const Duration(milliseconds: 200), // Typing speed
               ),
             ],
             isRepeatingAnimation: true,
@@ -128,16 +158,16 @@ class _DocHomepgState extends State<DocHomepg> {
                 child: UserAccountsDrawerHeader(
                   accountName: Text(
                     username,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   accountEmail: Text(
                     displayedEmail,
-                    style: TextStyle(fontSize: 14, color: Colors.white70),
+                    style: const TextStyle(fontSize: 14, color: Colors.white70),
                   ),
                   currentAccountPicture: CircleAvatar(
                     radius: 40,
                     backgroundColor: Colors.blue.shade400,
-                    child: Icon(Icons.person, size: 40, color: Colors.white),
+                    child: const Icon(Icons.person, size: 40, color: Colors.white),
                   ),
                   decoration: BoxDecoration(
                     color: Colors.blue.shade700,
@@ -241,7 +271,7 @@ class _DocHomepgState extends State<DocHomepg> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.black26,
                         blurRadius: 5,
@@ -260,14 +290,14 @@ class _DocHomepgState extends State<DocHomepg> {
                           color: Colors.grey.shade600,
                         ),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Dr. $username",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -281,13 +311,14 @@ class _DocHomepgState extends State<DocHomepg> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              "IN",
+                              'Status: ${isTimeIn ? 'IN' : 'OUT'}',
                               style: TextStyle(
-                                color: CupertinoColors.systemGreen,
+                                color: isTimeIn ? Colors.green : Colors.red,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
                             ),
+
                             Text(
                               'Location: Floor 3, Room 24',
                               style: TextStyle(
@@ -299,28 +330,29 @@ class _DocHomepgState extends State<DocHomepg> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: toggleTimeStatus,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange,
+                          backgroundColor: isTimeIn ? Colors.red : Colors.orange,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         child: Text(
-                          'Time In',
-                          style: TextStyle(
+                          isTimeIn ? 'Time Out' : 'Time In',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
+                      )
+
                     ],
                   ),
                 ),
                 SizedBox(height: 10),
-                // Adjusted space between "Patient Bookings" and next section
-                // Section for Patient Bookings
-                Text(
+               // Adjusted space between "Patient Bookings" and next section
+                 // Section for Patient Bookings
+                const Text(
                   'Patient Bookings',
                   style: TextStyle(
                     fontSize: 18,
@@ -331,7 +363,7 @@ class _DocHomepgState extends State<DocHomepg> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: 5,
+                  itemCount: 3,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.symmetric(vertical: 8),

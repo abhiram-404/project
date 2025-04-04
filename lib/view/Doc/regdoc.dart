@@ -13,14 +13,10 @@ class RegDoc extends StatefulWidget {
 
 class _RegDocState extends State<RegDoc> {
   final _formKey = GlobalKey<FormState>();
-  //final passwordrgx = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
   final phonergr = RegExp(r"^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$");
-  bool _isPasswordHidden = true;
 
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
-  // final passwordController = TextEditingController();
-  // final conpasswordController = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationId = '';
@@ -58,7 +54,7 @@ class _RegDocState extends State<RegDoc> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 40,
                       backgroundColor: Colors.white,
                       child: Icon(
@@ -179,23 +175,23 @@ class _RegDocState extends State<RegDoc> {
                           //     return null;
                           //   },
                           // ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 30),
 
                           ElevatedButton(
                             onPressed: () => _verifyPhone(),
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: Color(0xFF2575FC),
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              backgroundColor: const Color(0xFF2575FC),
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                            child: Center(child: Text('Verify Phone Number')),
+                            child: const Center(child: Text('Verify Phone Number')),
                           ),
 
-                          SizedBox(height: 40),
+                          const SizedBox(height: 40),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -203,7 +199,7 @@ class _RegDocState extends State<RegDoc> {
                                 MaterialPageRoute(builder: (context) => LoginDoc()),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'Already have an account?\nLogin',
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -227,20 +223,30 @@ class _RegDocState extends State<RegDoc> {
   }
 
   void _verifyPhone() {
+    print("Passing userData to Special: Name = ${nameController.text}, Phone = ${phoneController.text}");
     if (_formKey.currentState?.validate() ?? false) {
       FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+91${phoneController.text}',
+
         verificationCompleted: (PhoneAuthCredential credential) async {
+          if (nameController.text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Please enter your name before verification')),
+            );
+            return;
+          }
           await _auth.signInWithCredential(credential);
+          print("Passing userData to Special: Name = ${nameController.text}, Phone = ${phoneController.text}");
+
+
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => Special(
-                userData: {
-                  'name': nameController.text,
-                  'phone': phoneController.text,
-                  // 'password': passwordController.text,
-                },
+                 userData: {
+                   'name': nameController.text,
+                   'phone': phoneController.text,
+                 },
               ),
             ),
           );
@@ -257,13 +263,14 @@ class _RegDocState extends State<RegDoc> {
           setState(() {
             verificationId = verId;
           });
-          // Navigate to the OTP verification screen
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => OtpVerificationPage(
+                name: nameController.text,
                 verificationId: verificationId,
-                phoneNumber: phoneController.text,
+                phone: phoneController.text,
+                onVerificationSuccess: () {  },
               ),
             ),
           );

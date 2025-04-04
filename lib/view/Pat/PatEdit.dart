@@ -26,15 +26,6 @@ class PatEdit extends StatelessWidget {
                   // Custom App Bar with Back Button and Title
                   Row(
                     children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => PatProfile()),
-                          );
-                        },
-                      ),
                       Text(
                         'Edit Profile',
                         style: TextStyle(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../controller/doctor_service.dart';
 import '../test.dart';
+import 'dochomepg.dart';
+import 'logindoc.dart';
 
 class Special extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -144,7 +146,11 @@ class _SpecialState extends State<Special> {
                     ...widget.userData,
                     'specialization': selectedSpecialization,
                   };
+                  print("Registering doctor with data: ${widget.userData}");
+                  print("Registering doctor with data: $data");
                   await DoctorService().registerDoctor(data);
+
+
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Doctor Registered')),
@@ -152,12 +158,12 @@ class _SpecialState extends State<Special> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DocHomepg(),
+                      builder: (context) => LoginDoc(),
                     ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue.shade700,
+                  backgroundColor: Colors.blue.shade600,
                   padding: const EdgeInsets.symmetric(vertical: 18),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

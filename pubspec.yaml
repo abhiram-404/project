@@ -80,6 +80,11 @@ flutter:
      - asset/ebin_monn.png
      - asset/anjith_monn.png
      - asset/Animation.json
+     - asset/map.png
+     - asset/floor_1.png
+     - asset/floor_2.png
+     - asset/main_logo.png
+     - asset/main_logo_plain.png
      - asset/icon/x.png
      - asset/icon/whatsapp.png
      - asset/icon/tooth.png

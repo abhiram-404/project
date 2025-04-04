@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../docDetails.dart';
+
 class CardiologyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -92,8 +94,13 @@ class CardiologyPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle navigation or functionality for doctor details
-                  print('Selected Doctor ID: $uid');
+                  // Navigate to the doctor details page with the uid
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DocDetails(uid: uid), // Passing uid here
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,

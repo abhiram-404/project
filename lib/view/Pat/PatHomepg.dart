@@ -17,7 +17,8 @@ class PatHomePg extends StatefulWidget {
 class _PatHomePgState extends State<PatHomePg> {
   int _currentIndex = 0;
   String userName = "User";
-  String userPhone="";
+  // String userPhone="";
+  String userEmail ="";
   String? profileImageUrl;
 
   // List of screens for navigation
@@ -45,7 +46,7 @@ class _PatHomePgState extends State<PatHomePg> {
       if (snapshot.exists) {
         setState(() {
           userName = snapshot['name'];
-          userPhone=snapshot['phone'];
+          userEmail =snapshot['email'];
           profileImageUrl = snapshot['profileImage'];
         });
       }
@@ -71,7 +72,7 @@ class _PatHomePgState extends State<PatHomePg> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 accountEmail: Text(
-                  userPhone,
+                  userEmail,
                   style: TextStyle(fontSize: 14, color: Colors.white70),
                 ),
                 currentAccountPicture: CircleAvatar(
@@ -161,6 +162,7 @@ class _PatHomePgState extends State<PatHomePg> {
                       );
                     },
                   ),
+
 
                 ],
               ),

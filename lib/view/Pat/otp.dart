@@ -13,9 +13,9 @@ class OTP extends StatefulWidget {
 
 class _OTPState extends State<OTP> {
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false; // Loading indicator for submit button
-  final TextEditingController _otpController = TextEditingController(); // Controller for OTP input
-  final String _sentOtp = "123456"; // Mock OTP for verification (Replace with actual backend logic)
+  bool _isLoading = false;
+  final TextEditingController _otpController = TextEditingController();
+  final String _sentOtp = "123456";
 
   @override
   void dispose() {

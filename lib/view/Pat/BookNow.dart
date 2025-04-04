@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Testt extends StatefulWidget {
+class Booknow extends StatefulWidget {
   final String doctorName;
 
-  Testt({required this.doctorName});
+  Booknow({required this.doctorName});
 
   @override
-  _TesttState createState() => _TesttState();
+  _BooknowState createState() => _BooknowState();
 }
 
-class _TesttState extends State<Testt> {
+class _BooknowState extends State<Booknow> {
   final TextEditingController _dateController = TextEditingController();
   int? selectedTimeSlot; // Track the selected time slot index
 
@@ -33,8 +33,8 @@ class _TesttState extends State<Testt> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.teal.shade700,
-              Colors.teal.shade100,
+              Colors.teal.shade200,
+              Colors.teal.shade200,
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,

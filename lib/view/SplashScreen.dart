@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../controller/session.dart';
-import 'Doc/logindoc.dart';
+import 'Doc/dochomepg.dart';
 import 'Pat/PatHomepg.dart';
 import 'firstpg.dart';
 
@@ -41,17 +41,17 @@ class _SplashState extends State<Splash> {
           .get();
 
       if (userSnapshot.exists) {
-        Timer(Duration(seconds: 2), () {
+        Timer(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => PatHomePg()));
         });
       } else if (doctorSnapshot.exists) {
-        Timer(Duration(seconds: 2), () {
+        Timer(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LoginDoc()));
+              context, MaterialPageRoute(builder: (context) => DocHomepg()));
         });
       } else {
-        Timer(Duration(seconds: 2), () {
+        Timer(const Duration(seconds: 2), () {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => FirstPg()));
         });
@@ -65,7 +65,7 @@ class _SplashState extends State<Splash> {
       backgroundColor: Colors.blueGrey,
       body: Center(
         child: Container(
-          child: Image.asset('asset/psy.png'),
+          child: Image.asset('asset/main_logo.png'),
         ),
       ),
     );

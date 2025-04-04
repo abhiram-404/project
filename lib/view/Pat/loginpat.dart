@@ -1,5 +1,6 @@
 import 'package:dr_connect/controller/session.dart';
 import 'package:dr_connect/view/Pat/PatHomepg.dart';
+import 'package:dr_connect/view/Pat/registerUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -50,12 +51,12 @@ class _LoginPatState extends State<LoginPat> {
                 mainAxisSize: MainAxisSize.min, // Center the content vertically
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('asset/psy.png'),
+                    backgroundImage: AssetImage('asset/main_logo.png'),
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Welcome!',
                     style: TextStyle(
                       fontSize: 42,
@@ -64,7 +65,7 @@ class _LoginPatState extends State<LoginPat> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Text(
+                  const Text(
                     'Log in to continue',
                     style: TextStyle(
                       fontSize: 22,
@@ -140,8 +141,8 @@ class _LoginPatState extends State<LoginPat> {
                             elevation: 5,
                           ),
                           child: _isLoading
-                              ? CircularProgressIndicator(color: Colors.white)
-                              : Text(
+                              ? const CircularProgressIndicator(color: Colors.white)
+                              : const Text(
                                   'Login',
                                   style: TextStyle(
                                     fontSize: 16,
@@ -160,11 +161,11 @@ class _LoginPatState extends State<LoginPat> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          icon: Icon(
+                          icon: const Icon(
                             FontAwesomeIcons.google,
                             color: Colors.white,
                           ),
-                          label: Text(
+                          label: const Text(
                             'Sign in with Google',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -220,9 +221,9 @@ class _LoginPatState extends State<LoginPat> {
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.blue,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 15),
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -232,6 +233,24 @@ class _LoginPatState extends State<LoginPat> {
                           ),
                           child: Text("Doctor Login"),
                         ),
+
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => RegisterScreen()),
+                            );
+                          },
+                          child: const Text(
+                            "Don't have an account? Register here",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+
                       ],
                     ),
                   ),

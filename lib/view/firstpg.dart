@@ -24,7 +24,7 @@ class FirstPg extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage('asset/psy.png'), // Replace with your image path
+                  image: AssetImage('asset/main_logo_plain.png'), // Replace with your image path
                   fit: BoxFit.cover,
                 ),
               ),
@@ -64,7 +64,7 @@ class FirstPg extends StatelessWidget {
                   color2: Colors.greenAccent,
                   icon: Icons.person,
                   context: context,
-                  page: LoginPat(), // Replace with your actual PatientPage
+                  page: const LoginPat(), // Replace with your actual PatientPage
                 ),
               ],
             ),

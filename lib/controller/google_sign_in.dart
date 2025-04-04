@@ -42,7 +42,7 @@ class GoogleSignInService {
           await userDoc.set({
             'name': user.displayName ?? 'Anonymous',
             'email': user.email,
-            'phone': '00000 00000',
+            'phone': '0000000000',
             'hashedPassword': '',
             // Google users don't require a password
             'profileImage':

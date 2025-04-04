@@ -438,6 +438,7 @@ class HomeScreen extends StatelessWidget {
                         doctor['name'],
                         doctor['specialization'],
                         doctor['profileImage'],
+                        doctor['roomStatus'] ?? 'Unknown',
                       );
                     },
                   );
@@ -475,14 +476,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildDoctorCard(BuildContext context, String uid, String name,
-      String specialization, String profileImage) {
+      String specialization, String profileImage,  String roomStatus,) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
-                DoctorDetailsPage(uid: uid), // Passing uid to the next page
+                DocDetails(uid: uid), // Passing uid to the next page
           ),
         );
       },
@@ -509,6 +510,20 @@ class HomeScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Text(specialization),
+                  Row(
+                    children: [
+                      Icon(Icons.circle, color: roomStatus == 'Available' ? Colors.green : Colors.red, size: 10),
+                      SizedBox(width: 5),
+                      Text(
+                        roomStatus,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: roomStatus == 'Available' ? Colors.green : Colors.red,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ],
